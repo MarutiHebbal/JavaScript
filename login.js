@@ -1,36 +1,44 @@
 window.onload = function() {
 var button = document.getElementById("btn");
-var uname = document.getElementById("Name");
-var upass = document.getElementById("pass"); 
+var name = document.getElementById("Name");
+var password = document.getElementById("pass");
 
-isValid=function(){
-	var errN=document.getElementById("Js-Name-ref");
-	var errp=document.getElementById("Js-Pass-ref");
-	var match=uname.value.match(/[A-za-z0-9_]+@[A-za-z0-9]+\.[a-z]{2,3}/i);
-	if(!match){
-		errN.innerHTML="Enter valid Email";
-		return false;
-	}else if(!upass.value){
-		errN.innerHTML="";
-		errp.innerHTML="Enter valid Password";
 
-	}else{
-		errN.innerHTML=errp.innerHTML="";
-		return true;
-	}
+var auth = localStorage.getItem('auth');
+if(auth) {
+location.href = 'index.html';
 }
-uname.onkeypress =function(){
-	isValid();
 
+var isValid = function() {
+console.log('clicked', name.value, password.value);
+var errNameRef = document.getElementById("Js-Name-ref");
+var errPasswordRef = document.getElementById("Js-Pass-ref");
+var match = name.value.match(/[A-Z0-9_]+@[a-z0-9]+\.[a-z]{2,3}/i);
+if(!match) {
+errNameRef.innerHTML = "Enter Valid email id";
+return false;
+} else if(!password.value) {
+errNameRef.innerHTML = "";
+errPasswordRef.innerHTML = "Enter Valid Password";
+return false;
+} else {
+errNameRef.innerHTML = errPasswordRef.innerHTML = "";
+return true;
 }
-upass.onkeypress=function(){
-	isValid();
 }
+
+name.onkeypress = function(e) {
+isValid();
+}
+password.onkeypress = function(e) {
+isValid();
+}
+
 button.onclick = function() {
-if(isValid())
-	{
-		alert("Login Success")
-	}
+if(isValid()) {
+alert("login success");
+localStorage.setItem('auth', name.value);
+location.href="index.html"
 }
-
+}
 }
